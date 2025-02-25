@@ -26,7 +26,7 @@ import (
 
 	kservev1alpha1 "github.com/kserve/kserve/pkg/apis/serving/v1alpha1"
 	kservev1beta1 "github.com/kserve/kserve/pkg/apis/serving/v1beta1"
-	authorinov1beta2 "github.com/kuadrant/authorino/api/v1beta2"
+	authorinov1beta3 "github.com/kuadrant/authorino/api/v1beta3"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	. "github.com/onsi/gomega/gstruct"
@@ -849,7 +849,7 @@ var _ = Describe("InferenceService Controller", func() {
 
 			It("should not create auth config", func() {
 				Consistently(func() error {
-					ac := &authorinov1beta2.AuthConfig{}
+					ac := &authorinov1beta3.AuthConfig{}
 					return getAuthConfig(namespace.Name, isvc.Name, ac)
 				}).
 					WithTimeout(timeout).
@@ -899,7 +899,7 @@ var _ = Describe("InferenceService Controller", func() {
 				It("should not create auth config on missing status.URL", func() {
 
 					Consistently(func() error {
-						ac := &authorinov1beta2.AuthConfig{}
+						ac := &authorinov1beta3.AuthConfig{}
 						return getAuthConfig(namespace.Name, isvc.Name, ac)
 					}).
 						WithTimeout(timeout).
@@ -919,7 +919,7 @@ var _ = Describe("InferenceService Controller", func() {
 						Expect(updateISVCStatus(isvc)).To(Succeed())
 
 						Eventually(func(g Gomega) {
-							ac := &authorinov1beta2.AuthConfig{}
+							ac := &authorinov1beta3.AuthConfig{}
 							g.Expect(getAuthConfig(namespace.Name, isvc.Name, ac)).To(Succeed())
 							g.Expect(ac.Spec.Authorization["anonymous-access"]).NotTo(BeNil())
 						}).
@@ -932,7 +932,7 @@ var _ = Describe("InferenceService Controller", func() {
 						Expect(updateISVCStatus(isvc)).To(Succeed())
 
 						Eventually(func(g Gomega) {
-							ac := &authorinov1beta2.AuthConfig{}
+							ac := &authorinov1beta3.AuthConfig{}
 							g.Expect(getAuthConfig(namespace.Name, isvc.Name, ac)).To(Succeed())
 							g.Expect(ac.Spec.Authorization["anonymous-access"]).NotTo(BeNil())
 						}).
@@ -942,7 +942,7 @@ var _ = Describe("InferenceService Controller", func() {
 
 						Expect(enableAuth(isvc)).To(Succeed())
 						Eventually(func(g Gomega) {
-							ac := &authorinov1beta2.AuthConfig{}
+							ac := &authorinov1beta3.AuthConfig{}
 							g.Expect(ac.Spec.Authorization["kubernetes-user"]).NotTo(BeNil())
 							g.Expect(getAuthConfig(namespace.Name, isvc.Name, ac)).To(Succeed())
 						}).
@@ -961,7 +961,7 @@ var _ = Describe("InferenceService Controller", func() {
 						Expect(updateISVCStatus(isvc)).To(Succeed())
 
 						Eventually(func(g Gomega) {
-							ac := &authorinov1beta2.AuthConfig{}
+							ac := &authorinov1beta3.AuthConfig{}
 							g.Expect(getAuthConfig(namespace.Name, isvc.Name, ac)).To(Succeed())
 							g.Expect(ac.Spec.Authorization["kubernetes-user"]).NotTo(BeNil())
 						}).
@@ -974,7 +974,7 @@ var _ = Describe("InferenceService Controller", func() {
 						Expect(updateISVCStatus(isvc)).To(Succeed())
 
 						Eventually(func(g Gomega) {
-							ac := &authorinov1beta2.AuthConfig{}
+							ac := &authorinov1beta3.AuthConfig{}
 							g.Expect(getAuthConfig(namespace.Name, isvc.Name, ac)).To(Succeed())
 							g.Expect(ac.Spec.Authorization["kubernetes-user"]).NotTo(BeNil())
 						}).
@@ -984,7 +984,7 @@ var _ = Describe("InferenceService Controller", func() {
 
 						Expect(disableAuth(isvc)).To(Succeed())
 						Eventually(func(g Gomega) {
-							ac := &authorinov1beta2.AuthConfig{}
+							ac := &authorinov1beta3.AuthConfig{}
 							g.Expect(getAuthConfig(namespace.Name, isvc.Name, ac)).To(Succeed())
 							g.Expect(ac.Spec.Authorization["anonymous-access"]).NotTo(BeNil())
 						}).
@@ -1364,7 +1364,7 @@ func hasServerFromGateway(gateway *istioclientv1beta1.Gateway, portName string) 
 	return targetServerExist
 }
 
-func getAuthConfig(namespace, name string, ac *authorinov1beta2.AuthConfig) error {
+func getAuthConfig(namespace, name string, ac *authorinov1beta3.AuthConfig) error {
 	return k8sClient.Get(context.Background(), types.NamespacedName{Namespace: namespace, Name: name}, ac)
 }
 
