@@ -29,7 +29,7 @@ env:
 jobs:
   validate-tag:
     runs-on: ubuntu-latest
-    if: github.ref_name == 'incubating'
+    if: github.ref_name == 'incubating-test'
     steps:
       - name: Validate tag format
         run: |
