@@ -18,5 +18,5 @@ releases:
     version: v0.5.8
     repoUrl: https://github.com/caikit/caikit-nlp
   - name: Text Generation Inference Server
-    version: commit 8a8c55dd0884b8e4e420d22f10bcce6752455edf
+    version: commit 8a8c55dd0884b8e4e420d22f10bcce675245678
     repoUrl: https://github.com/IBM/text-generation-inference/
