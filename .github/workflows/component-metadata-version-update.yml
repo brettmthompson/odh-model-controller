@@ -124,7 +124,7 @@ jobs:
 
           # Create PR
           PR_URL=$(gh pr create \
-            --base incubating \
+            --base incubating-test \
             --head "$BRANCH_NAME" \
             --title "chore(metadata): Update ${{ github.event.inputs.component }} version to ${{ github.event.inputs.component_version }}" \
             --body "## Summary

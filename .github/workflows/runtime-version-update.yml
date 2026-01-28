@@ -129,7 +129,7 @@ jobs:
 
           # Create PR
           PR_URL=$(gh pr create \
-            --base incubating \
+            --base incubating-test \
             --head "$BRANCH_NAME" \
             --title "chore(runtimes): Update runtime version to ${{ github.event.inputs.runtime_version }}" \
             --body "## Summary
